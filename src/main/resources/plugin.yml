@@ -1,0 +1,12 @@
+name: HQCustomMenu
+version: 1.0.0
+api-version: 1.13
+main: kr.hqservice.menu.HQCustomMenu
+authors: [ Cosine_A ]
+depend:
+  - MS-Core
+
+commands:
+  메뉴:
+    permission: op
+    description: 메뉴 관련 명령어입니다.
