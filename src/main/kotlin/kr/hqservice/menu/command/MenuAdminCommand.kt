@@ -14,13 +14,29 @@ import net.md_5.bungee.api.chat.TextComponent
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
+import org.bukkit.command.TabCompleter
 import org.bukkit.entity.Player
 
 class MenuAdminCommand(
     plugin: HQCustomMenu
-) : CommandExecutor {
+) : CommandExecutor, TabCompleter {
+
+    private companion object {
+        val menuTabList = listOf("제거", "아이템설정", "열기", "리로드")
+        val commandTabList = mutableListOf("생성", "목록").apply { addAll(menuTabList) }
+    }
 
     private val menuRepository: MenuRepository<String, Menu> = plugin.menuRepository
+
+    override fun onTabComplete(sender: CommandSender, command: Command, label: String, args: Array<out String>): List<String> {
+        if (args.size <= 1) {
+            return commandTabList
+        }
+        if (args.size == 2 && menuTabList.contains(args[0])) {
+            return menuRepository.getMenus()
+        }
+        return emptyList()
+    }
 
     override fun onCommand(sender: CommandSender, command: Command, label: String, args: Array<out String>): Boolean {
         if (args.isEmpty()) {
@@ -163,7 +179,7 @@ class MenuAdminCommand(
         sender.sendMessages("$prefix 메뉴 목록", "")
         if (sender is Player) {
             menus.forEachIndexed { index, name ->
-                val component = TextComponent("$index. $name 메뉴 ").apply {
+                val component = TextComponent("${index + 1}. $name 메뉴 ").apply {
                     val buttonBuilder: (String, String, String) -> Unit = { title, command, description ->
                         val editorButton = TextComponent(title)
                         editorButton.clickEvent = ClickEvent(ClickEvent.Action.RUN_COMMAND, command)
@@ -177,7 +193,7 @@ class MenuAdminCommand(
             }
         } else {
             menus.forEachIndexed { index, name ->
-                sender.sendMessage("$index. $name 메뉴")
+                sender.sendMessage("${index + 1}. $name 메뉴")
             }
         }
     }
