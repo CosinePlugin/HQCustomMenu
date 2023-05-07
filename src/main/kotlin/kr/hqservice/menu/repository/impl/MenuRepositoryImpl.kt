@@ -22,7 +22,7 @@ class MenuRepositoryImpl(
     }
 
     fun saveAll() {
-        menus.values.filter { it.isChanged }.forEach { it.save() }
+        menus.values.forEach { it.save() }
     }
 
     override fun reload() {

@@ -3,7 +3,7 @@ version: 1.0.0
 api-version: 1.13
 main: kr.hqservice.menu.HQCustomMenu
 authors: [ Cosine_A ]
-depend:
+softdepend:
   - MS-Core
 
 commands:
