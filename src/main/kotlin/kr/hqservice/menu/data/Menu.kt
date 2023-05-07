@@ -25,8 +25,6 @@ class Menu(
     private var customName = name
     private var close = ""
 
-    var isChanged = true
-
     init {
         load()
     }
@@ -61,7 +59,6 @@ class Menu(
             config.set("menu.contents.$slot.commands", menuItemStack.commands)
         }
         config.save(file)
-        isChanged = false
     }
 
     fun reload() {
@@ -83,7 +80,6 @@ class Menu(
                 menuItemStack.item = item
             }
         }
-        isChanged = true
     }
 
     fun getCustomName(): String {

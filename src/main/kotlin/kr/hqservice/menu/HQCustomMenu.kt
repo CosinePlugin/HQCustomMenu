@@ -3,7 +3,6 @@ package kr.hqservice.menu
 import kr.hqservice.menu.command.MenuAdminCommand
 import kr.hqservice.menu.listener.MenuInventoryListener
 import kr.hqservice.menu.repository.impl.MenuRepositoryImpl
-import kr.hqservice.menu.runnable.MenuSaveRunnable
 import kr.ms.core.bstats.Metrics
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.java.JavaPlugin
@@ -38,8 +37,6 @@ class HQCustomMenu : JavaPlugin() {
 
         menuRepository = MenuRepositoryImpl(this)
         menuRepository.loadAll()
-
-        server.scheduler.runTaskTimerAsynchronously(this, MenuSaveRunnable(menuRepository), 3600, 3600)
 
         server.pluginManager.registerEvents(MenuInventoryListener(), this)
 
